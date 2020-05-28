@@ -27,7 +27,11 @@ endif
 let g:loaded_sl_license = 100
 
 if !exists("g:sl_license")
-    let g:sl_license = readfile("LICENSE")
+    if !filereadable("LICENSE")
+        let g:sl_license = [ "No 'LICENSE' file available" ]
+    else
+        let g:sl_license = readfile("LICENSE")
+    endif
 endif
 
 function s:SL_InsertLicenseCore()
