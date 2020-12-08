@@ -20,43 +20,16 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
-if exists("g:loaded_sl_license")
+if exists("g:loaded_sl_gohelpers")
     finish
 endif
 
-let g:loaded_sl_license = 100
+let g:loaded_sl_gohelpers = 100
 
-if !exists("g:sl_license")
-    if !filereadable("LICENSE")
-        let g:sl_license = [ "No 'LICENSE' file available" ]
-    else
-        let g:sl_license = readfile("LICENSE")
-    endif
-endif
-
-function s:SL_InsertLicenseCore()
-    for l:line in g:sl_license
-        execute "normal! o" . l:line
-    endfor
+function s:SL_NewGoFile()
+    " Add the license header
+    call SL_InsertGoLicenseHeader()
 endfunction
 
-function SL_InsertLicenseHeader()
-    execute "normal! mqggO\<esc>d$"
-    call s:SL_InsertLicenseCore()
-    execute "normal! o\<esc>ggdd`q"
-endfunction
-
-function SL_InsertCppLicenseHeader()
-    execute "normal! mqggO\<esc>d$i/**"
-    call s:SL_InsertLicenseCore()
-    execute "normal! o\<esc>xA*/\<esc>o\<esc>`q"
-endfunction
-
-function SL_InsertGoLicenseHeader()
-    execute "normal! mqggO\<esc>d$"
-    for l:line in g:sl_license
-        execute "normal! o// " . l:line
-    endfor
-    execute "normal! o\<esc>ggdd`q"
-endfunction
+autocmd BufNewFile *.{go} call <SID>SL_NewGoFile()
 
