@@ -42,6 +42,7 @@ function s:SL_NewCppHeaderFile()
     execute "normal! GO\<cr>\<esc>O"
 endfunction
 
-autocmd BufNewFile *.{c,cpp} call <SID>SL_NewCppSourceFile()
+autocmd BufEnter *.cppm :setlocal filetype=cpp
+autocmd BufNewFile *.{c,cpp,cppm} call <SID>SL_NewCppSourceFile()
 autocmd BufNewFile *.{h,hpp} call <SID>SL_NewCppHeaderFile()
 
