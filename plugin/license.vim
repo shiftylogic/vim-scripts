@@ -76,3 +76,11 @@ function SL_InsertPyLicenseHeader()
     execute "normal! o\<esc>ggdd`q"
 endfunction
 
+function SL_InsertSwiftLicenseHeader()
+    execute "normal! mqggO\<esc>d$i/**"
+    for l:line in g:sl_license
+        execute "normal! o* " . l:line
+    endfor
+    execute "normal! o\<esc>xA*/\<esc>o\<esc>`q"
+endfunction
+
